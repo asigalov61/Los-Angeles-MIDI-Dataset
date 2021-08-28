@@ -6,11 +6,13 @@
 
 ***
 
-## Project Los Angeles and Tegridy Code are proud to announce the upcoming release of the Los Angeles MIDI Dataset: a state-of-the-art MIDI dataset for MIR and Music AI purposes
+## Los Angeles MIDI Dataset is now avaialable for download. 
 
-***
+## Unfortuantelly, due to high-costs associated with creation of the dataset, it is not going to be released for free at this time.
 
-## Please stand-by for release details shortly...
+## Meanwhile, you are invited to check out complete meta-data from the dataset here:
+
+### https://github.com/asigalov61/Los-Angeles-MIDI-Metabase
 
 ***
 
