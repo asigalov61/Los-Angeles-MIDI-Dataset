@@ -2,10 +2,6 @@
 
 ***
 
-<img width="512" src="https://github.com/asigalov61/Los-Angeles-MIDI-Dataset/raw/main/Artwork/Los_Angeles_Music%20(1).jpg">
-
-***
-
 ## Los Angeles MIDI Dataset is now avaialable for download. 
 
 ## Unfortuantelly, due to high-costs associated with creation of the dataset, it is not going to be released for free at this time.
