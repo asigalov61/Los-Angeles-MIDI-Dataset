@@ -23,7 +23,5 @@
 
 ***
 
-## Project Los Angeles
-## Tegridy Code 2022
-
-
+### Project Los Angeles
+### Tegridy Code 2022
