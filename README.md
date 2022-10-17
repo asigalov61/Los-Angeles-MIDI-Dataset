@@ -15,7 +15,7 @@
 
 ```bibtex
 @inproceedings{lev2022losangelesmididataset,
-    title       = {Los Angeles MIDI Dataset: SOTA MIDI Dataset for MIR and Music AI Purposes},
+    title       = {Los Angeles MIDI Dataset: SOTA mega-scale MIDI dataset for MIR and Music AI purposes},
     author      = {Aleksandr Lev},
     booktitle   = {GitHub},
     year        = {2022},
