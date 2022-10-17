@@ -16,7 +16,7 @@
 ### 1) ~1000000 MIDIs to explore :)
 ### 2) Each MIDI file was read-checked and de-duped
 ### 3) Extensive meta-data for each MIDI file
-### 4) Detailed feature matrix for each MIDI file
+### 4) Detailed features matrix for each MIDI file
 ### 5) Helper Python code
 ### 6) Much more... :)
 
