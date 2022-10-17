@@ -20,6 +20,13 @@ import gdown
 
 ***
 
+[![Open In Colab][colab-badge]][colab-notebook3]
+
+[colab-notebook3]: <https://colab.research.google.com/github/asigalov61/Los-Angeles-MIDI-Dataset/blob/main/Los_Angeles_MIDI_Dataset_Search_and_Explore.ipynb>
+[colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
+
+***
+
 ## Main Features:
 
 ### 1) ~1000000 MIDIs to explore :)
