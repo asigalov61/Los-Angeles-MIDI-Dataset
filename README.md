@@ -13,17 +13,17 @@
 
 
 ```bibtex
-@inproceedings{lev2021losangelesmididataset,
+    @inproceedings{lev2021losangelesmididataset,
     title       = {Los Angeles MIDI Dataset: SOTA MIDI Dataset for MIR and Music AI Purposes},
     author      = {Aleksandr Lev},
     booktitle   = {GitHub},
-    year        = {2021},
+    year        = {2022},
 }
 ```
 
 ***
 
 ## Project Los Angeles
-## Tegridy Code 2021
+## Tegridy Code 2022
 
 
