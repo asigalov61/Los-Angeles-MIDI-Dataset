@@ -1,5 +1,5 @@
 # Los Angeles MIDI Dataset
-## SOTA MIDI Dataset for MIR and Music AI Purposes
+## SOTA mega-scale MIDI dataset for MIR and Music AI Purposes
 
 ***
 
