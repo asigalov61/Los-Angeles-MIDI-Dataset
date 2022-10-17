@@ -7,7 +7,18 @@
 
 ***
 
-## Los Angeles MIDI Dataset is now avaialable for download. 
+## Los Angeles MIDI Dataset is now avaialable for download!!!
+
+***
+
+## Main Features:
+
+### ~1000000 MIDIs to explore :)
+### Each MIDI file was read-checked and de-duped
+### Extensive meta-data for each MIDI file
+### Detailed feature matrix for each MIDI file
+### Helper Python code
+### Much more... :)
 
 ***
 
