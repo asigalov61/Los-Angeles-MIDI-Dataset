@@ -2,15 +2,15 @@
 
 ***
 
-## Los Angeles MIDI Dataset is now avaialable for download. 
-
-## Unfortuantelly, due to high-costs associated with creation of the dataset, it is not going to be released for free at this time.
-
-## Meanwhile, you are invited to check out complete meta-data from the dataset here:
-
-### https://github.com/asigalov61/Los-Angeles-MIDI-Metabase
+![Vintage_Los_Angeles_Print](https://user-images.githubusercontent.com/56325539/196157186-5b0edd15-020f-4877-a8e2-b1af42f960c6.jpg)
 
 ***
+
+## Los Angeles MIDI Dataset is now avaialable for download. 
+
+***
+
+
 
 ```bibtex
 @inproceedings{lev2021losangelesmididataset,
