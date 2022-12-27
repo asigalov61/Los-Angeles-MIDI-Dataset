@@ -10,12 +10,7 @@
 ## Los Angeles MIDI Dataset is now avaialable for download!!!
 
 ```
-!pip install gdown
-import gdown
-```
-
-```
-!gdown '1UlaHFqXMkUk0i7Wp3UaMOkfem0L2iGhq'
+https://zenodo.org/record/7485085#.Y6qQ9NXMIol
 ```
 
 ***
