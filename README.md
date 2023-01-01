@@ -24,12 +24,11 @@ https://zenodo.org/record/7485085#.Y6qQ9NXMIol
 
 ## Main Features:
 
-### 1) ~1000000 MIDIs to explore :)
-### 2) Each MIDI file was read-checked and de-duped
+### 1) ~600000 100% unique MIDIs to explore :)
+### 2) Each MIDI file was read-checked and 100% de-duped
 ### 3) Extensive meta-data for each MIDI file
 ### 4) Detailed features matrix for each MIDI file
 ### 5) Helper Python code
-### 6) Much more... :)
 
 ***
 
@@ -37,14 +36,14 @@ https://zenodo.org/record/7485085#.Y6qQ9NXMIol
 
 ```bibtex
 @inproceedings{lev2022losangelesmididataset,
-    title       = {Los Angeles MIDI Dataset: SOTA mega-scale MIDI dataset for MIR and Music AI purposes},
+    title       = {Los Angeles MIDI Dataset: SOTA kilo-scale MIDI dataset for MIR and Music AI purposes},
     author      = {Aleksandr Lev},
     booktitle   = {GitHub},
-    year        = {2022},
+    year        = {2023},
 }
 ```
 
 ***
 
 ### Project Los Angeles
-### Tegridy Code 2022
+### Tegridy Code 2023
