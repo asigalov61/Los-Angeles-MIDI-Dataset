@@ -10,7 +10,7 @@
 ## Los Angeles MIDI Dataset is now avaialable for download!!!
 
 ```
-https://zenodo.org/record/7485085#.Y6qQ9NXMIol
+https://zenodo.org/record/7498080#.Y7QBmdXMIok
 ```
 
 ***
