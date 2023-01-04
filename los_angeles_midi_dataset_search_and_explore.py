@@ -16,7 +16,7 @@ Powered by tegridy-tools: https://github.com/asigalov61/tegridy-tools
 
 #### Project Los Angeles
 
-#### Tegridy Code 2022
+#### Tegridy Code 2023
 
 ***
 
@@ -475,9 +475,22 @@ print('=' * 70)
 
 #@title Meta-Data Search
 search_query = "Come To My Window" #@param {type:"string"}
-case_sensitive_search = True #@param {type:"boolean"}
+case_sensitive_search = False #@param {type:"boolean"}
 
-fields_to_search = ['track_name', 'text_event', 'lyric', 'copyright']
+fields_to_search = ['track_name', 
+                    'text_event', 
+                    'lyric', 
+                    'copyright_text_event', 
+                    'marker',
+                    'text_event_08',
+                    'text_event_09',
+                    'text_event_0a',
+                    'text_event_0b',
+                    'text_event_0c',
+                    'text_event_0d',
+                    'text_event_0e',
+                    'text_event_0f',
+                    ]
 
 print('=' * 70)
 print('Sarching...')
