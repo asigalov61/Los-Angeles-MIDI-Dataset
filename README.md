@@ -24,7 +24,7 @@ https://zenodo.org/record/7498080#.Y7QBmdXMIok
 
 ## Main Features:
 
-### 1) ~600000 100% unique MIDIs to explore :)
+### 1) ~240000 100% unique MIDIs to explore :)
 ### 2) Each MIDI file was read-checked and 100% de-duped
 ### 3) Extensive meta-data for each MIDI file
 ### 4) Detailed features matrix for each MIDI file
