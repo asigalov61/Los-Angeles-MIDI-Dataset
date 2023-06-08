@@ -32,7 +32,14 @@ https://zenodo.org/record/7498080#.Y7QBmdXMIok
 
 ***
 
+## NEW in version 2.0
 
+### 1) Quality over quantity: the dataset was reduced in half by triple-deduping (first by md5 hash, then by pitches sum, and then by pitches counts)
+### 2) The dataset meta-data was extended to provide additional important info and to show more MIDI data
+### 3) The dataset code/colab is now featuring super-fast MIDI searches (by pitches and by patches)
+### 4) The dataset code/colab can now display and play each MIDI from the dataset
+
+***
 
 ```bibtex
 @inproceedings{lev2022losangelesmididataset,
