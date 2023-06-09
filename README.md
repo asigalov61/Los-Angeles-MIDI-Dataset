@@ -7,13 +7,7 @@
 
 ***
 
-## Los Angeles MIDI Dataset is now avaialable for download!!!
-
-```
-https://zenodo.org/record/7498080#.Y7QBmdXMIok
-```
-
-***
+## Search and explore Los Angeles MIDI dataset with Google Colab
 
 [![Open In Colab][colab-badge]][colab-notebook3]
 
@@ -22,6 +16,9 @@ https://zenodo.org/record/7498080#.Y7QBmdXMIok
 
 ***
 
+## [Los Angeles MIDI Dataset is now avaialable for download!!!](https://huggingface.co/datasets/projectlosangeles/Los-Angeles-MIDI-Dataset)
+
+***
 ## Main Features:
 
 ### 1) ~240000 100% unique MIDIs to explore :)
