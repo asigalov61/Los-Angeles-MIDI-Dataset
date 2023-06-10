@@ -786,7 +786,7 @@ print('=' * 70)
 print('Match ratio', max_ratio)
 print('MIDI file name', meta_data[max_ratio_index][0])
 print('=' * 70)
-pprint.pprint(('Sample metadata entries', meta_data[max_ratio_index][1][:16]), compact = True)
+pprint.pprint(['Sample metadata entries', meta_data[max_ratio_index][1][:8]], compact = True)
 print('=' * 70)
 
 #============================================
@@ -982,7 +982,7 @@ if md5_hash_MIDI_file_name != '':
         print('Metadata index:', meta_data.index(d))
         print('MIDI file name:', meta_data[meta_data.index(d)][0])
         print('-' * 70)
-        pprint.pprint(('Result:', d[1][:16]), compact = True)
+        pprint.pprint(['Result:', d[1][:16]], compact = True)
         print('=' * 70)
         break
  
@@ -1015,7 +1015,7 @@ else:
               print('Metadata index:', meta_data.index(d))
               print('MIDI file name:', meta_data[meta_data.index(d)][0])
               print('-' * 70)
-              pprint.pprint(('Result:', dd[2][:16]), compact = True)
+              pprint.pprint(['Result:', dd[2][:16]], compact = True)
               print('=' * 70)
           
           else:
@@ -1025,7 +1025,7 @@ else:
               print('Metadata index:', meta_data.index(d))
               print('MIDI file name:', meta_data[meta_data.index(d)][0])
               print('-' * 70)
-              pprint.pprint(('Result:', dd[2][:16]), compact = True)
+              pprint.pprint(['Result:', dd[2][:16]], compact = True)
               print('=' * 70)
     
     except KeyboardInterrupt:
