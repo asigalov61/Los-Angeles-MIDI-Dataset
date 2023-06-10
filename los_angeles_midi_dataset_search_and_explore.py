@@ -383,13 +383,21 @@ for s in score:
     
 events_matrix.sort(key=lambda x: x[1])
 
-for e in events_matrix:
-    if e[0] == 'note':
-        if e[3] == 9:
-            e[4] = ((e[4] % 128) + 128)
+mult_pitches_counts = []
 
-pitches_counts = [[y[0],y[1]] for y in Counter([y[4] for y in events_matrix if y[0] == 'note']).most_common()]
-pitches_counts.sort(key=lambda x: x[0], reverse=True)
+for i in range(-6, 6):
+
+  for e in events_matrix:
+      if e[0] == 'note':
+          if e[3] == 9:
+              e[4] = ((e[4] % 128) + 128)
+          else:
+            e[4] = ((e[4] % 128) + i)
+
+  pitches_counts = [[y[0],y[1]] for y in Counter([y[4] for y in events_matrix if y[0] == 'note']).most_common()]
+  pitches_counts.sort(key=lambda x: x[0], reverse=True)
+  
+  mult_pitches_counts.append(pitches_counts)
 
 patches_list = sorted(list(set([y[3] for y in events_matrix if y[0] == 'patch_change'])))
 
@@ -718,6 +726,7 @@ print('=' * 70)
 
 maximum_match_ratio_to_search_for = 1 #@param {type:"slider", min:0, max:1, step:0.01}
 pitches_counts_cutoff_threshold_ratio = 0.2 #@param {type:"slider", min:0, max:1, step:0.05}
+search_transposed_pitches = False #@param {type:"boolean"}
 skip_exact_matches = False #@param {type:"boolean"}
 render_MIDI_to_audio = False #@param {type:"boolean"}
 
@@ -734,22 +743,33 @@ for d in tqdm(meta_data):
     p_counts.sort(reverse = True, key = lambda x: x[1])
     max_p_count = p_counts[1][0]
     trimmed_p_counts = [y for y in p_counts if y[1] >= (max_p_count * pitches_counts_cutoff_threshold_ratio)] 
+    
+    if search_transposed_pitches:
+      search_pitches = mult_pitches_counts
+    else:
+      search_pitches = [mult_pitches_counts[6]]
+    
+    rat = []
 
-    pitches_counts.sort(reverse = True, key = lambda x: x[1])
-    max_pitches_count = pitches_counts[1][0]
-    trimmed_pitches_counts = [y for y in pitches_counts if y[1] >= (max_pitches_count * pitches_counts_cutoff_threshold_ratio)] 
+    for m in search_pitches:
 
-    num_same_pitches = len(set([T[0] for T in trimmed_p_counts]) & set([m[0] for m in trimmed_pitches_counts]))
-    same_pitches_ratio = (num_same_pitches / len(set([m[0] for m in trimmed_p_counts]+[T[0] for T in trimmed_pitches_counts])))
+      m.sort(reverse = True, key = lambda x: x[1])
+      max_pitches_count = m[1][0]
+      trimmed_pitches_counts = [y for y in m if y[1] >= (max_pitches_count * pitches_counts_cutoff_threshold_ratio)] 
 
-    if skip_exact_matches:
-      if same_pitches_ratio == 1:
+      num_same_pitches = len(set([T[0] for T in trimmed_p_counts]) & set([m[0] for m in trimmed_pitches_counts]))
+      same_pitches_ratio = (num_same_pitches / len(set([m[0] for m in trimmed_p_counts]+[T[0] for T in trimmed_pitches_counts])))
+
+      if skip_exact_matches:
+        if same_pitches_ratio == 1:
+          same_pitches_ratio = 0
+
+      if same_pitches_ratio > maximum_match_ratio_to_search_for:
         same_pitches_ratio = 0
 
-    if same_pitches_ratio > maximum_match_ratio_to_search_for:
-      same_pitches_ratio = 0
-      
-    ratios.append(same_pitches_ratio)
+      rat.append(same_pitches_ratio)
+
+    ratios.append(max(rat))
   
   except KeyboardInterrupt:
     break
