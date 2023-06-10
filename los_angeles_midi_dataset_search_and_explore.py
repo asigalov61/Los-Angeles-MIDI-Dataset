@@ -445,7 +445,7 @@ plt.show()
 
 #@title Legacy MIDI Matrixes Search (Slow)
 
-#@markdown NOTE: You can stop the searcg at any time to render partial results
+#@markdown NOTE: You can stop the search at any time to render partial results
 
 minimum_match_ratio_to_search_for = 0 #@param {type:"slider", min:0, max:500, step:1}
 stop_search_on_exact_match = True #@param {type:"boolean"}
@@ -712,7 +712,7 @@ print('=' * 70)
 
 #@title MIDI Pitches Search (Fast)
 
-#@markdown NOTE: You can stop the searcg at any time to render partial results
+#@markdown NOTE: You can stop the search at any time to render partial results
 
 maximum_match_ratio_to_search_for = 1 #@param {type:"slider", min:0, max:1, step:0.01}
 pitches_counts_cutoff_threshold_ratio = 0.2 #@param {type:"slider", min:0, max:1, step:0.05}
@@ -819,7 +819,8 @@ plt.show()
 
 #@title MIDI Patches Search (Fast)
 
-#@markdown NOTE: You can stop the searcg at any time to render partial results
+#@markdown NOTE: You can stop the search at any time to render partial results
+
 maximum_match_ratio_to_search_for = 1 #@param {type:"slider", min:0, max:1, step:0.01}
 skip_exact_matches = False #@param {type:"boolean"}
 render_MIDI_to_audio = False #@param {type:"boolean"}
@@ -922,6 +923,7 @@ plt.show()
 
 #@title Metadata Search
 search_query = "Come To My Window" #@param {type:"string"}
+md5_hash_MIDI_file_name = "d9a7e1c6a375b8e560155a5977fc10f8" #@param {type:"string"}
 case_sensitive_search = False #@param {type:"boolean"}
 
 fields_to_search = ['track_name', 
@@ -940,29 +942,72 @@ fields_to_search = ['track_name',
                     ]
 
 print('=' * 70)
-print('Sarching...')
+print('Los Angeles MIDI Dataset Metadata Search')
+print('=' * 70)
+print('Searching...')
 print('=' * 70)
 
-for d in tqdm(meta_data):
-  for dd in d[1]:
-    if dd[0] in fields_to_search:
-      if case_sensitive_search:
-        if str(search_query) in str(dd[2]):
-          print('Found!')
-          print('=' * 70)
-          print('Metadata index:', meta_data.index(d))
-          print('MIDI file name:', meta_data[meta_data.index(d)][0])
-          print('Result:', dd[2])
-          print('=' * 70)
-      
-      else:
-        if str(search_query).lower() in str(dd[2]).lower():
-          print('Found!')
-          print('=' * 70)
-          print('Metadata index:', meta_data.index(d))
-          print('MIDI file name:', meta_data[meta_data.index(d)][0])
-          print('Result:', dd[2])
-          print('=' * 70)
+if md5_hash_MIDI_file_name != '':
+  for d in tqdm(meta_data):
+    try:
+      if d[0] == md5_hash_MIDI_file_name:
+        print('Found!')
+        print('=' * 70)
+        print('Metadata index:', meta_data.index(d))
+        print('MIDI file name:', meta_data[meta_data.index(d)][0])
+        print('Result:', d[1])
+        print('=' * 70)
+        break
+ 
+    except KeyboardInterrupt:
+      print('Ending search...')
+      print('=' * 70)
+      break
+    
+    except:
+      print('Ending search...')
+      print('=' * 70)
+      break
+
+  if d[0] != md5_hash_MIDI_file_name:
+    print('Not found!')
+    print('=' * 70)
+    print('md5 hash was not found!')
+    print('Ending search...')
+    print('=' * 70)
+
+else:
+  for d in tqdm(meta_data):
+    try:
+      for dd in d[1]:
+        if dd[0] in fields_to_search:
+          if case_sensitive_search:
+            if str(search_query) in str(dd[2]):
+              print('Found!')
+              print('=' * 70)
+              print('Metadata index:', meta_data.index(d))
+              print('MIDI file name:', meta_data[meta_data.index(d)][0])
+              print('Result:', dd[2])
+              print('=' * 70)
+          
+          else:
+            if str(search_query).lower() in str(dd[2]).lower():
+              print('Found!')
+              print('=' * 70)
+              print('Metadata index:', meta_data.index(d))
+              print('MIDI file name:', meta_data[meta_data.index(d)][0])
+              print('Result:', dd[2])
+              print('=' * 70)
+    
+    except KeyboardInterrupt:
+      print('Ending search...')
+      print('=' * 70)
+      break
+    
+    except:
+      print('Ending search...')
+      print('=' * 70)
+      break
 
 """# (MIDI FILE PLAYER)"""
 
