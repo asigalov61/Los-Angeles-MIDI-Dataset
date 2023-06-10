@@ -193,7 +193,7 @@ print('=' * 70)
 
 """# (PLOT TOTALS)"""
 
-#@title Plot Totals
+#@title Plot totals from MIDI matrixes (legacy)
 
 cos_sim = pairwise.cosine_similarity(
       totals[0][0][4] 
@@ -270,6 +270,117 @@ plt.colorbar(fraction=0.046 * im_ratio, pad=0.04)
 plt.title('Velocities')
 plt.xlabel("Position")
 plt.ylabel("Position")
+plt.tight_layout()
+plt.plot()
+
+#@title Plot totals from MIDI metadata
+
+#===============================================================================
+
+pitches_counts_totals = [0] * 128
+
+for m in tqdm(meta_data):
+  for mm in m[1][10][1]:
+    if mm[0] < 128:
+      pitches_counts_totals[mm[0]] += mm[1]
+
+y = range(128)
+plt.figure(figsize=(8, 8))
+plt.plot(y, pitches_counts_totals)
+
+plt.title('MIDI Instruments Pitches')
+plt.xlabel("Ratio")
+plt.ylabel("Pitch")
+plt.tight_layout()
+plt.plot()
+
+sim_mat = [ [0]*128 for i in range(128)]
+x = 0
+
+for p in pitches_counts_totals:
+  y = 0
+  for pp in pitches_counts_totals:
+
+    sim_mat[x][y] = min(10, (p / pp))
+    y += 1
+
+  x += 1
+
+cos_sim = pairwise.cosine_similarity(
+      sim_mat 
+  )
+plt.figure(figsize=(8, 8))
+plt.imshow(sim_mat, cmap="inferno", interpolation="none")
+im_ratio = 1
+plt.colorbar(fraction=0.046 * im_ratio, pad=0.04)
+plt.title('MIDI Instruments Pitches')
+plt.xlabel("Ratio")
+plt.ylabel("Pitch")
+plt.tight_layout()
+plt.plot()
+
+#===============================================================================
+
+pitches_counts_totals = [1] * 128
+
+
+for m in tqdm(meta_data):
+  for mm in m[1][10][1]:
+    if mm[0] > 128:
+      pitches_counts_totals[mm[0] % 128] += mm[1]
+
+y = range(128)
+plt.figure(figsize=(8, 8))
+plt.plot(y, pitches_counts_totals)
+
+plt.title('MIDI Drums Pitches')
+plt.xlabel("Ratio")
+plt.ylabel("Pitch")
+plt.tight_layout()
+plt.plot()
+
+sim_mat = [ [0]*128 for i in range(128)]
+x = 0
+
+for p in pitches_counts_totals:
+  y = 0
+  for pp in pitches_counts_totals:
+
+    sim_mat[x][y] = min(10, (p / pp))
+    y += 1
+
+  x += 1
+
+cos_sim = pairwise.cosine_similarity(
+      sim_mat 
+  )
+plt.figure(figsize=(8, 8))
+plt.imshow(sim_mat, cmap="inferno", interpolation="none")
+im_ratio = 1
+plt.colorbar(fraction=0.046 * im_ratio, pad=0.04)
+plt.title('MIDI Drums Pitches')
+plt.xlabel("Ratio")
+plt.ylabel("Pitch")
+plt.tight_layout()
+plt.plot()
+
+#===============================================================================
+
+patches_counts_totals = [0] * 256
+
+
+for m in tqdm(meta_data):
+  for mm in m[1][11][1]:
+    patches_counts_totals[mm[0]] += mm[1]
+
+
+y = range(128)
+plt.figure(figsize=(8, 8))
+plt.plot(y, patches_counts_totals[:128])
+
+plt.title('MIDI Patches')
+plt.xlabel("Ratio")
+plt.ylabel('Patch')
 plt.tight_layout()
 plt.plot()
 
