@@ -61,6 +61,8 @@ from IPython.display import Audio, display
 
 from huggingface_hub import hf_hub_download
 
+from google.colab import files
+
 os.chdir('/content/')
 print('Done!')
 
@@ -922,6 +924,9 @@ plt.ylabel("Pitch")
 plt.show()
 
 #@title Metadata Search
+
+#@markdown You can search the metadata by search query or by MIDI md5 hash file name
+
 search_query = "Come To My Window" #@param {type:"string"}
 md5_hash_MIDI_file_name = "d9a7e1c6a375b8e560155a5977fc10f8" #@param {type:"string"}
 case_sensitive_search = False #@param {type:"boolean"}
@@ -1086,6 +1091,75 @@ try:
 except:
   print('File not found!!!')
   print('Check the filename!')
+  print('=' * 70)
+
+"""# (COLAB MIDI FILES LOCATOR/DOWNLOADER)"""
+
+#@title Loacate and/or download desired MIDI files by MIDI md5 hash file names
+
+MIDI_md5_hash_file_name_1 = "d9a7e1c6a375b8e560155a5977fc10f8" #@param {type:"string"}
+MIDI_md5_hash_file_name_2 = "" #@param {type:"string"}
+MIDI_md5_hash_file_name_3 = "" #@param {type:"string"}
+MIDI_md5_hash_file_name_4 = "" #@param {type:"string"}
+MIDI_md5_hash_file_name_5 = "" #@param {type:"string"}
+download_located_files = False #@param {type:"boolean"}
+
+print('=' * 70)
+print('MIDI files locator and downloader')
+print('=' * 70)
+
+md5_list = []
+
+if MIDI_md5_hash_file_name_1 != '':
+  md5_list.append(MIDI_md5_hash_file_name_1)
+
+if MIDI_md5_hash_file_name_2 != '':
+  md5_list.append(MIDI_md5_hash_file_name_2)
+
+if MIDI_md5_hash_file_name_3 != '':
+  md5_list.append(MIDI_md5_hash_file_name_3)
+
+if MIDI_md5_hash_file_name_4 != '':
+  md5_list.append(MIDI_md5_hash_file_name_4)
+
+if MIDI_md5_hash_file_name_5 != '':
+  md5_list.append(MIDI_md5_hash_file_name_5)
+
+if len(md5_list) > 0:
+  for m in md5_list:
+    try:
+
+      fn = m
+      fn_idx = [y[0] for y in LAMD_files_list].index(fn)
+      f = LAMD_files_list[fn_idx][1]
+
+      print('Found md5 hash file name', m)
+
+      location_str = ''
+
+      fl = f.split('/')
+      for fa in fl[:-1]:
+        if fa != '' and fa != 'content':
+          location_str += '/'
+          location_str += str(fa)
+
+      print('Colab location/folder', location_str)
+
+      if download_located_files:
+        print('Downloading MIDI file', str(m) + '.mid')
+        files.download(f)
+
+      print('=' * 70)
+
+    except:
+      print('md5 hash file name', m, 'not found!!!')
+      print('Check the file name!')
+      print('=' * 70)
+      continue
+
+else:
+  print('No md5 hash file names were specified!')
+  print('Check input!')
   print('=' * 70)
 
 """# (CUSTOM ANALYSIS TEMPLATE)"""
