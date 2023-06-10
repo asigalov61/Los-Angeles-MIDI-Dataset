@@ -520,6 +520,49 @@ for i in range(-6, 6):
 
 patches_list = sorted(list(set([y[3] for y in events_matrix if y[0] == 'patch_change'])))
 
+
+#==================================================
+
+ms_score = MIDI.midi2ms_score(open(f, 'rb').read())
+
+ms_events_matrix = []
+
+itrack1 = 1
+
+while itrack1 < len(ms_score):
+    for event in ms_score[itrack1]:         
+        if event[0] == 'note':
+            ms_events_matrix.append(event)
+    itrack1 += 1
+
+ms_events_matrix.sort(key=lambda x: x[1])
+
+
+chords = []
+pe = ms_events_matrix[0]
+cho = []
+for e in ms_events_matrix:
+    if (e[1] - pe[1]) == 0:
+      if e[3] != 9:
+        if (e[4] % 12) not in cho:
+          cho.append(e[4] % 12)
+    else:
+      if len(cho) > 0:
+        chords.append(sorted(cho))
+      cho = []
+      if e[3] != 9:
+        if (e[4] % 12) not in cho:
+          cho.append(e[4] % 12)
+
+    pe = e
+    
+if len(cho) > 0:
+    chords.append(sorted(cho))
+
+ms_chords_counts = sorted([[list(key), val] for key,val in Counter([tuple(c) for c in chords if len(c) > 1]).most_common()], reverse=True, key = lambda x: x[1])
+
+#==================================================
+
 print('=' * 70)
 print('Done!')
 print('=' * 70)
@@ -755,7 +798,11 @@ for i in tqdm(range(0, len(midi_matrixes), (num_jobs*scores_per_job))):
   except KeyboardInterrupt:
     break
   
-  except:
+  except Exception as e:
+    print('WARNING !!!')
+    print('=' * 70)
+    print('Error detected:', e)
+    print('=' * 70)
     continue
 
 print('Done!')
@@ -869,7 +916,7 @@ for d in tqdm(meta_data):
   try:
     p_counts = d[1][10][1]
     p_counts.sort(reverse = True, key = lambda x: x[1])
-    max_p_count = p_counts[1][0]
+    max_p_count = p_counts[0][1]
     trimmed_p_counts = [y for y in p_counts if y[1] >= (max_p_count * pitches_counts_cutoff_threshold_ratio)] 
     
     if search_transposed_pitches:
@@ -882,7 +929,7 @@ for d in tqdm(meta_data):
     for m in search_pitches:
 
       m.sort(reverse = True, key = lambda x: x[1])
-      max_pitches_count = m[1][0]
+      max_pitches_count = m[0][1]
       trimmed_pitches_counts = [y for y in m if y[1] >= (max_pitches_count * pitches_counts_cutoff_threshold_ratio)] 
 
       num_same_pitches = len(set([T[0] for T in trimmed_p_counts]) & set([m[0] for m in trimmed_pitches_counts]))
@@ -902,8 +949,138 @@ for d in tqdm(meta_data):
   except KeyboardInterrupt:
     break
   
-  except:
+  except Exception as e:
+    print('WARNING !!!')
+    print('=' * 70)
+    print('Error detected:', e)
+    ratios.append(0)
+    print('=' * 70)
     break
+
+max_ratio = max(ratios)
+max_ratio_index = ratios.index(max(ratios))
+
+print('FOUND')
+print('=' * 70)
+print('Match ratio', max_ratio)
+print('MIDI file name', meta_data[max_ratio_index][0])
+print('=' * 70)
+pprint.pprint(['Sample metadata entries', meta_data[max_ratio_index][1][:8]], compact = True)
+print('=' * 70)
+
+#============================================
+# MIDI rendering code
+#============================================
+
+print('Rendering source MIDI...')
+print('=' * 70)
+
+fn = meta_data[max_ratio_index][0]
+fn_idx = [y[0] for y in LAMD_files_list].index(fn)
+
+f = LAMD_files_list[fn_idx][1]
+
+ms_score = MIDI.midi2ms_score(open(f, 'rb').read())
+
+itrack = 1
+song_f = []
+
+while itrack < len(ms_score):
+    for event in ms_score[itrack]:         
+        if event[0] == 'note':
+            song_f.append(event)
+    itrack += 1
+
+song_f.sort(key=lambda x: x[1])
+
+fname = f.split('.mid')[0]
+
+x = []
+y =[]
+c = []
+
+colors = ['red', 'yellow', 'green', 'cyan', 'blue', 'pink', 'orange', 'purple', 'gray', 'white', 'gold', 'silver', 'aqua', 'azure', 'bisque', 'coral']
+
+for s in song_f:
+  x.append(s[1] / 1000)
+  y.append(s[4])
+  c.append(colors[s[3]])
+
+if render_MIDI_to_audio:
+  FluidSynth("/usr/share/sounds/sf2/FluidR3_GM.sf2", 16000).midi_to_audio(str(fname + '.mid'), str(fname + '.wav'))
+  display(Audio(str(fname + '.wav'), rate=16000))
+
+plt.figure(figsize=(14,5))
+ax=plt.axes(title=fname)
+ax.set_facecolor('black')
+
+plt.scatter(x,y, c=c)
+plt.xlabel("Time")
+plt.ylabel("Pitch")
+plt.show()
+
+#==============================================
+
+if download_MIDI:
+  print('=' * 70)
+  print('Downloading MIDI file', str(fn) + '.mid')
+  files.download(f)
+  print('=' * 70)
+
+#@title MIDI Chords Search (Fast)
+
+#@markdown NOTE: You can stop the search at any time to render partial results
+
+maximum_match_ratio_to_search_for = 1 #@param {type:"slider", min:0, max:1, step:0.01}
+chords_counts_cutoff_threshold_ratio = 0 #@param {type:"slider", min:0, max:1, step:0.05}
+skip_exact_matches = False #@param {type:"boolean"}
+render_MIDI_to_audio = False #@param {type:"boolean"}
+download_MIDI = False #@param {type:"boolean"}
+
+print('=' * 70)
+print('MIDI Chords Search')
+print('=' * 70)
+
+ratios = []
+
+for d in tqdm(meta_data):
+
+  try:
+
+    c_counts = d[1][8][1]
+    if len(c_counts) == 0:
+      c_counts = copy.deepcopy([[[0, 0], 0]])
+
+    c_counts.sort(reverse = True, key = lambda x: x[0][1])
+    max_c_count = c_counts[0][1]
+    trimmed_c_counts = [y for y in c_counts if y[1] >= (max_c_count * chords_counts_cutoff_threshold_ratio)] 
+    trimmed_c_counts.sort(reverse = True, key = lambda x: x[1])
+    
+    max_chords_count = ms_chords_counts[0][1]
+    trimmed_chords_counts = [y for y in ms_chords_counts if y[1] >= (max_chords_count * chords_counts_cutoff_threshold_ratio)] 
+
+    num_same_chords = len(set([tuple(T[0]) for T in trimmed_c_counts]) & set([tuple(t[0]) for t in trimmed_chords_counts]))
+    same_chords_ratio = (num_same_chords / len(set(tuple(x[0]) for x in [trimmed_c_counts+trimmed_chords_counts][0])))
+
+    if skip_exact_matches:
+      if same_chords_ratio == 1:
+        same_chords_ratio = 0
+
+    if same_chords_ratio > maximum_match_ratio_to_search_for:
+      same_chords_ratio = 0
+
+    ratios.append(same_chords_ratio)
+  
+  except KeyboardInterrupt:
+    break
+  
+  except Exception as e:
+    print('WARNING !!!')
+    print('=' * 70)
+    print('Error detected:', e)
+    ratios.append(0)
+    print('=' * 70)
+    continue
 
 max_ratio = max(ratios)
 max_ratio_index = ratios.index(max(ratios))
@@ -1015,8 +1192,13 @@ for d in tqdm(meta_data):
   except KeyboardInterrupt:
     break
   
-  except:
-    break
+  except Exception as e:
+    print('WARNING !!!')
+    print('=' * 70)
+    print('Error detected:', e)
+    ratios.append(0)
+    print('=' * 70)
+    continue
 
 max_ratio = max(ratios)
 max_ratio_index = ratios.index(max(ratios))
@@ -1135,10 +1317,12 @@ if md5_hash_MIDI_file_name != '':
       print('=' * 70)
       break
     
-    except:
-      print('Ending search...')
+    except Exception as e:
+      print('WARNING !!!')
       print('=' * 70)
-      break
+      print('Error detected:', e)
+      print('=' * 70)
+      continue
 
   if d[0] != md5_hash_MIDI_file_name:
     print('Not found!')
