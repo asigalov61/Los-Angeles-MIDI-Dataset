@@ -580,6 +580,7 @@ minimum_match_ratio_to_search_for = 0 #@param {type:"slider", min:0, max:500, st
 stop_search_on_exact_match = True #@param {type:"boolean"}
 skip_exact_matches = False #@param {type:"boolean"}
 render_MIDI_to_audio = False #@param {type:"boolean"}
+download_MIDI = False #@param {type:"boolean"}
 
 #=================================================================================
 
@@ -821,7 +822,14 @@ try:
 
 except:
   pass
+#==============================================
 
+if download_MIDI:
+  print('=' * 70)
+  print('Downloading MIDI file', str(fn) + '.mid')
+  files.download(f)
+  print('=' * 70)
+  
 #============================================
 
 print('Top 100 matches')
@@ -844,10 +852,11 @@ print('=' * 70)
 #@markdown NOTE: You can stop the search at any time to render partial results
 
 maximum_match_ratio_to_search_for = 1 #@param {type:"slider", min:0, max:1, step:0.01}
-pitches_counts_cutoff_threshold_ratio = 0.2 #@param {type:"slider", min:0, max:1, step:0.05}
+pitches_counts_cutoff_threshold_ratio = 0 #@param {type:"slider", min:0, max:1, step:0.05}
 search_transposed_pitches = False #@param {type:"boolean"}
 skip_exact_matches = False #@param {type:"boolean"}
 render_MIDI_to_audio = False #@param {type:"boolean"}
+download_MIDI = False #@param {type:"boolean"}
 
 print('=' * 70)
 print('MIDI Pitches Search')
@@ -958,6 +967,14 @@ plt.xlabel("Time")
 plt.ylabel("Pitch")
 plt.show()
 
+#==============================================
+
+if download_MIDI:
+  print('=' * 70)
+  print('Downloading MIDI file', str(fn) + '.mid')
+  files.download(f)
+  print('=' * 70)
+
 #@title MIDI Patches Search (Fast)
 
 #@markdown NOTE: You can stop the search at any time to render partial results
@@ -965,6 +982,7 @@ plt.show()
 maximum_match_ratio_to_search_for = 1 #@param {type:"slider", min:0, max:1, step:0.01}
 skip_exact_matches = False #@param {type:"boolean"}
 render_MIDI_to_audio = False #@param {type:"boolean"}
+download_MIDI = False #@param {type:"boolean"}
 
 print('=' * 70)
 print('MIDI Patches Search')
@@ -1061,6 +1079,14 @@ plt.scatter(x,y, c=c)
 plt.xlabel("Time")
 plt.ylabel("Pitch")
 plt.show()
+
+#==============================================
+
+if download_MIDI:
+  print('=' * 70)
+  print('Downloading MIDI file', str(fn) + '.mid')
+  files.download(f)
+  print('=' * 70)
 
 #@title Metadata Search
 
@@ -1165,6 +1191,7 @@ else:
 md5_hash_MIDI_file_name = "d9a7e1c6a375b8e560155a5977fc10f8" #@param {type:"string"}
 full_path_to_MIDI = "/content/Los-Angeles-MIDI-Dataset/Come-To-My-Window-Modified-Sample-MIDI.mid" #@param {type:"string"}
 render_MIDI_to_audio = False #@param {type:"boolean"}
+download_MIDI = False #@param {type:"boolean"}
 
 #============================================
 # MIDI rendering code
@@ -1229,6 +1256,14 @@ try:
   plt.xlabel("Time")
   plt.ylabel("Pitch")
   plt.show()
+
+  #==============================================
+
+  if download_MIDI:
+    print('=' * 70)
+    print('Downloading MIDI file', str(fn) + '.mid')
+    files.download(f)
+    print('=' * 70)
 
 except:
   print('File not found!!!')
