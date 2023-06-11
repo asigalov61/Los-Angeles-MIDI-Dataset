@@ -37,6 +37,7 @@ import math
 import statistics
 import random
 from collections import Counter
+import pickle
 
 from tqdm import tqdm
 
@@ -92,10 +93,10 @@ if filez == []:
 print('Randomizing file list...')
 random.shuffle(filez)
 
-TMIDIX.Tegridy_Any_Pickle_File_Writer(filez, '/content/drive/MyDrive/filez')
+TMIDIX.Tegridy_Any_Pickle_File_Writer(filez, '/content/filez')
 
 #@title Load file list
-filez = TMIDIX.Tegridy_Any_Pickle_File_Reader('/content/drive/MyDrive/filez')
+filez = TMIDIX.Tegridy_Any_Pickle_File_Reader('/content/filez')
 print('Done!')
 
 """# (PROCESS)"""
@@ -356,6 +357,59 @@ print('=' * 70)
 print('Resulting Stats:')
 print('=' * 70)
 print('Total good processed MIDI files:', files_count)
+print('=' * 70)
+
+"""# (BUILD FINAL METADATA FILE)"""
+
+#@title Build final metadata file
+full_path_to_metadata_pickle_files = "/content/drive/MyDrive" #@param {type:"string"}
+
+print('=' * 70)
+print('Los Angeles MIDI Dataset Metadata File Builder')
+print('=' * 70)
+print('Searching for files...')
+
+filez = list()
+for (dirpath, dirnames, filenames) in os.walk(full_path_to_metadata_pickle_files):
+    filez += [os.path.join(dirpath, file) for file in filenames if file.split('.')[-1] == 'pickle']
+print('=' * 70)
+
+filez.sort()
+
+print('Loading metadata files... Please wait...')
+print('=' * 70)
+
+metadata = []
+
+for f in tqdm(filez):
+
+    metadata.extend(pickle.load(open(f, 'rb')))
+    print('Done!')
+    print('=' * 70)
+    print('Loaded file:', f)
+    print('=' * 70)
+  
+print('Done!')
+print('=' * 70)
+print('Randomizing metadata entries order...')
+random.shuffle(metadata)
+print('=' * 70)
+print('Writing final metadata pickle file...Please wait...')
+
+with open('/content/LAMDa_META_DATA.pickle', 'wb') as handle:
+  pickle.dump(metadata, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+print('=' * 70)
+print('Done!')
+print('=' * 70)
+
+#@title Zip final metadata file
+print('=' * 70)
+print('Zipping... Please wait...')
+print('=' * 70)
+!zip LAMDa_META_DATA.zip LAMDa_META_DATA.pickle
+print('=' * 70)
+print('Done!')
 print('=' * 70)
 
 """# Congrats! You did it! :)"""
