@@ -193,7 +193,7 @@ for f in tqdm(filez[START_FILE_NUMBER:]):
                 event.extend([patches[event[3]]])
                 events_matrix1.append(event)
 
-        if len(events_matrix1) > 0:           
+        if len(events_matrix1) > 32:           
             
             events_matrix1.sort(key=lambda x: x[1])
 
@@ -242,14 +242,14 @@ for f in tqdm(filez[START_FILE_NUMBER:]):
             median_vel = int(statistics.median(vels))
             
             text_events_list = ['text_event', 
-                           'text_event_08', 
-                           'text_event_09', 
-                           'text_event_0a', 
-                           'text_event_0b', 
-                           'text_event_0c',
-                           'text_event_0d',
-                           'text_event_0e',
-                           'text_event_0f']
+                          'text_event_08', 
+                          'text_event_09', 
+                          'text_event_0a', 
+                          'text_event_0b', 
+                          'text_event_0c',
+                          'text_event_0d',
+                          'text_event_0e',
+                          'text_event_0f']
             
             text_events_count = len([e for e in full_events_matrix if e[0] in text_events_list])
             lyric_events_count = len([e for e in full_events_matrix if e[0] == 'lyric'])
@@ -287,7 +287,7 @@ for f in tqdm(filez[START_FILE_NUMBER:]):
             thirty_second_note_idx = full_events_matrix.index(thirty_second_note)
 
             data = []
-            data.append(['total_number_of_tracks', itrack0])
+            data.append(['total_number_of_tracks', itrack])
             data.append(['total_number_of_opus_midi_events', len(opus_events_matrix)])
             data.append(['total_number_of_score_midi_events', len(full_events_matrix)])
             data.append(['average_median_mode_time_ms', [avg_time, median_time, mode_time]])
