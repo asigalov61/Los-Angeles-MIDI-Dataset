@@ -42,6 +42,7 @@ import random
 import pickle
 from tqdm import tqdm
 import pprint
+import statistics
 
 from joblib import Parallel, delayed
 import multiprocessing
@@ -561,6 +562,27 @@ if len(cho) > 0:
 
 ms_chords_counts = sorted([[list(key), val] for key,val in Counter([tuple(c) for c in chords if len(c) > 1]).most_common()], reverse=True, key = lambda x: x[1])
 
+times = []
+pt = ms_events_matrix[0][1]
+start = True
+for e in ms_events_matrix:
+    if (e[1]-pt) != 0 or start == True:
+        times.append((e[1]-pt))
+        start = False
+    pt = e[1]
+    
+durs = [e[2] for e in ms_events_matrix]
+vels = [e[5] for e in ms_events_matrix]
+
+avg_time = int(sum(times) / len(times))
+avg_dur = int(sum(durs) / len(durs))
+
+mode_time = statistics.mode(times)
+mode_dur = statistics.mode(durs)
+
+median_time = int(statistics.median(times))
+median_dur = int(statistics.median(durs))
+
 #==================================================
 
 print('=' * 70)
@@ -898,10 +920,24 @@ print('=' * 70)
 
 #@markdown NOTE: You can stop the search at any time to render partial results
 
+#@markdown Match ratio control option
+
 maximum_match_ratio_to_search_for = 1 #@param {type:"slider", min:0, max:1, step:0.01}
+
+#@markdown MIDI pitches search options
+
 pitches_counts_cutoff_threshold_ratio = 0 #@param {type:"slider", min:0, max:1, step:0.05}
 search_transposed_pitches = False #@param {type:"boolean"}
 skip_exact_matches = False #@param {type:"boolean"}
+
+#@markdown Additional search options
+
+add_pitches_counts_ratios = False #@param {type:"boolean"}
+add_timings_ratios = False #@param {type:"boolean"}
+add_durations_ratios = False #@param {type:"boolean"}
+
+#@markdown Other options
+
 render_MIDI_to_audio = False #@param {type:"boolean"}
 download_MIDI = False #@param {type:"boolean"}
 
@@ -909,7 +945,7 @@ print('=' * 70)
 print('MIDI Pitches Search')
 print('=' * 70)
 
-ratios = []
+final_ratios = []
 
 for d in tqdm(meta_data):
 
@@ -917,34 +953,145 @@ for d in tqdm(meta_data):
     p_counts = d[1][10][1]
     p_counts.sort(reverse = True, key = lambda x: x[1])
     max_p_count = p_counts[0][1]
-    trimmed_p_counts = [y for y in p_counts if y[1] >= (max_p_count * pitches_counts_cutoff_threshold_ratio)] 
+    trimmed_p_counts = [y for y in p_counts if y[1] >= (max_p_count * pitches_counts_cutoff_threshold_ratio)]
+    total_p_counts = sum([y[1] for y in trimmed_p_counts])
     
     if search_transposed_pitches:
       search_pitches = mult_pitches_counts
     else:
       search_pitches = [mult_pitches_counts[6]]
-    
-    rat = []
+
+    #===================================================
+
+    ratios_list = []
+
+    #===================================================
+
+    atrat = [0]
+
+    if add_timings_ratios:
+
+      source_times = [avg_time, 
+                      median_time, 
+                      mode_time]
+
+      match_times = meta_data[0][1][3][1]
+
+      times_ratios = []
+
+      for i in range(len(source_times)):
+        maxtratio = max(source_times[i], match_times[i])
+        mintratio = min(source_times[i], match_times[i])
+        times_ratios.append(mintratio / maxtratio)
+
+      avg_times_ratio = sum(times_ratios) / len(times_ratios)
+
+      atrat[0] = avg_times_ratio
+
+    #===================================================
+
+    adrat = [0]
+
+    if add_durations_ratios:
+
+      source_durs = [avg_dur,
+                      median_dur,
+                      mode_dur]
+
+      match_durs = meta_data[0][1][4][1]
+
+      durs_ratios = []
+
+      for i in range(len(source_durs)):
+        maxtratio = max(source_durs[i], match_durs[i])
+        mintratio = min(source_durs[i], match_durs[i])
+        durs_ratios.append(mintratio / maxtratio)
+
+      avg_durs_ratio = sum(durs_ratios) / len(durs_ratios)
+
+      adrat[0] = avg_durs_ratio
+
+    #===================================================
 
     for m in search_pitches:
 
+      sprat = []
+
       m.sort(reverse = True, key = lambda x: x[1])
       max_pitches_count = m[0][1]
-      trimmed_pitches_counts = [y for y in m if y[1] >= (max_pitches_count * pitches_counts_cutoff_threshold_ratio)] 
+      trimmed_pitches_counts = [y for y in m if y[1] >= (max_pitches_count * pitches_counts_cutoff_threshold_ratio)]
+      total_pitches_counts = sum([y[1] for y in trimmed_pitches_counts])
 
-      num_same_pitches = len(set([T[0] for T in trimmed_p_counts]) & set([m[0] for m in trimmed_pitches_counts]))
+      same_pitches = set([T[0] for T in trimmed_p_counts]) & set([m[0] for m in trimmed_pitches_counts])
+      num_same_pitches = len(same_pitches)
       same_pitches_ratio = (num_same_pitches / len(set([m[0] for m in trimmed_p_counts]+[T[0] for T in trimmed_pitches_counts])))
 
       if skip_exact_matches:
         if same_pitches_ratio == 1:
           same_pitches_ratio = 0
 
-      if same_pitches_ratio > maximum_match_ratio_to_search_for:
-        same_pitches_ratio = 0
+      sprat.append(same_pitches_ratio)
 
-      rat.append(same_pitches_ratio)
+      #===================================================
 
-    ratios.append(max(rat))
+      spcrat = [0]
+
+      if add_pitches_counts_ratios:
+
+        same_trimmed_p_counts = sorted([T for T in trimmed_p_counts if T[0] in same_pitches], reverse = True)
+        same_trimmed_pitches_counts = sorted([T for T in trimmed_pitches_counts if T[0] in same_pitches], reverse = True)
+
+        same_trimmed_p_counts_ratios = [[s[0], s[1] / total_p_counts] for s in same_trimmed_p_counts]
+        same_trimmed_pitches_counts_ratios = [[s[0], s[1] / total_pitches_counts] for s in same_trimmed_pitches_counts]
+
+        same_pitches_counts_ratios = []
+
+        for i in range(len(same_trimmed_p_counts_ratios)):
+          mincratio = min(same_trimmed_p_counts_ratios[i][1], same_trimmed_pitches_counts_ratios[i][1])
+          maxcratio = max(same_trimmed_p_counts_ratios[i][1], same_trimmed_pitches_counts_ratios[i][1])
+          same_pitches_counts_ratios.append([same_trimmed_p_counts_ratios[i][0], mincratio / maxcratio])
+
+        same_counts_ratios = [s[1] for s in same_pitches_counts_ratios]
+
+        if len(same_counts_ratios) > 0:
+          avg_same_pitches_counts_ratio = sum(same_counts_ratios) / len(same_counts_ratios)
+        else:
+          avg_same_pitches_counts_ratio = 0
+
+        spcrat[0] = avg_same_pitches_counts_ratio
+
+      #===================================================
+
+      r_list = [sprat[0]]
+
+      if add_pitches_counts_ratios:
+        r_list.append(spcrat[0])
+      
+      if add_timings_ratios:
+        r_list.append(atrat[0])
+        
+      if add_durations_ratios:
+        r_list.append(adrat[0])
+
+      ratios_list.append(r_list)
+
+    #===================================================
+    
+    avg_ratios_list = []
+
+    for r in ratios_list:
+      avg_ratios_list.append(sum(r) / len(r))
+
+    #===================================================
+    
+    final_ratio = max(avg_ratios_list)
+    
+    if final_ratio > maximum_match_ratio_to_search_for:
+        final_ratio = 0
+
+    final_ratios.append(final_ratio)
+
+    #===================================================
   
   except KeyboardInterrupt:
     break
@@ -957,8 +1104,8 @@ for d in tqdm(meta_data):
     print('=' * 70)
     break
 
-max_ratio = max(ratios)
-max_ratio_index = ratios.index(max(ratios))
+max_ratio = max(final_ratios)
+max_ratio_index = final_ratios.index(max_ratio)
 
 print('FOUND')
 print('=' * 70)
