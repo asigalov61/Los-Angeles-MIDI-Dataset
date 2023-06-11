@@ -9,9 +9,36 @@
 
 ## Search and explore Los Angeles MIDI dataset with Google Colab
 
+[![Open In Colab][colab-badge]][colab-notebook1]
+
+[colab-notebook1]: <https://colab.research.google.com/github/asigalov61/Los-Angeles-MIDI-Dataset/blob/main/Los_Angeles_MIDI_Dataset_Search_and_Explore.ipynb>
+[colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
+
+***
+
+## Make your own Los Angeles MIDI Dataset from any MIDI scrape with Google Colab
+
+[![Open In Colab][colab-badge]][colab-notebook2]
+
+[colab-notebook2]: <https://colab.research.google.com/github/asigalov61/Los-Angeles-MIDI-Dataset/blob/main/Los_Angeles_MIDI_Dataset_Maker.ipynb>
+[colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
+
+***
+
+## Make your own Los Angeles MIDI Dataset metadata with Google Colab
+
 [![Open In Colab][colab-badge]][colab-notebook3]
 
-[colab-notebook3]: <https://colab.research.google.com/github/asigalov61/Los-Angeles-MIDI-Dataset/blob/main/Los_Angeles_MIDI_Dataset_Search_and_Explore.ipynb>
+[colab-notebook3]: <https://colab.research.google.com/github/asigalov61/Los-Angeles-MIDI-Dataset/blob/main/META-DATA/Los_Angeles_MIDI_Dataset_Metadata_Maker.ipynb>
+[colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
+
+***
+
+## Master MIDI Dataset Search and Filter
+
+[![Open In Colab][colab-badge]][colab-notebook4]
+
+[colab-notebook4]: <https://colab.research.google.com/github/asigalov61/Los-Angeles-MIDI-Dataset/blob/main/Extras/Master_MIDI_Dataset_Search_and_Filter.ipynb>
 [colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
 
 ***
@@ -35,15 +62,6 @@
 ### 2) The dataset meta-data was extended to provide additional important info and to show more MIDI data
 ### 3) The dataset code/colab is now featuring super-fast MIDI searches (by pitches and by patches)
 ### 4) The dataset code/colab can now display and play each MIDI from the dataset
-
-***
-
-## Make your own Los Angeles MIDI Dataset from any MIDI scrape with Google Colab
-
-[![Open In Colab][colab-badge]][colab-notebook2]
-
-[colab-notebook2]: <https://colab.research.google.com/github/asigalov61/Los-Angeles-MIDI-Dataset/blob/main/Los_Angeles_MIDI_Dataset_Maker.ipynb>
-[colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
 
 ***
 
