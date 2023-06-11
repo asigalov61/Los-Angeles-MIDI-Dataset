@@ -178,6 +178,12 @@ if filez == []:
 print('Randomizing file list...')
 random.shuffle(filez)
 print('=' * 70)
+
+###################
+
+if not os.path.exists('/content/Output-MIDI-Dataset'):
+    os.makedirs('/content/Output-MIDI-Dataset')
+
 ###################
 
 input_files_count = 0
@@ -574,9 +580,6 @@ for f in filez:
 
           # Processed files counter
           files_count += 1
-
-          if files_count == 2:
-            break
                                         
     except KeyboardInterrupt:
         print('Quitting...')
