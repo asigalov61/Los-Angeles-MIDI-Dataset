@@ -7,7 +7,7 @@
 
 ***
 
-## Search and explore Los Angeles MIDI dataset
+## Search and Explore Los Angeles MIDI dataset
 
 [![Open In Colab][colab-badge]][colab-notebook1]
 
