@@ -38,6 +38,15 @@
 
 ***
 
+## Make your own Los Angeles MIDI Dataset from any MIDI scrape with Google Colab
+
+[![Open In Colab][colab-badge]][colab-notebook2]
+
+[colab-notebook2]: <https://colab.research.google.com/github/asigalov61/Los-Angeles-MIDI-Dataset/blob/main/Los_Angeles_MIDI_Dataset_Maker.ipynb>
+[colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
+
+***
+
 ```bibtex
 @inproceedings{lev2022losangelesmididataset,
     title       = {Los Angeles MIDI Dataset: SOTA kilo-scale MIDI dataset for MIR and Music AI purposes},
