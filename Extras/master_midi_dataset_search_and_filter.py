@@ -543,10 +543,9 @@ for f in filez:
           print('-' * 70)
           print('Copying max ratios MIDIs...')
 
-          for i in range(number_of_top_ratios_MIDIs_to_collect):
+          for m in max_ratios:
 
-            max_ratio = max_ratios[i]
-            max_ratio_index = final_ratios.index(max_ratio)
+            max_ratio_index = final_ratios.index(m)
 
             ffn = meta_data[max_ratio_index][0]
             ffn_idx = [y[0] for y in LAMD_files_list].index(ffn)
@@ -560,12 +559,12 @@ for f in filez:
             if not os.path.exists(copy_path):
                 os.mkdir(copy_path)
 
-            shutil.copy2(f, copy_path+'/'+fn)
-
-            fff = str(max_ratio * 100) + '_' + ffn + '.mid'
+            fff = str(m * 100) + '_' + ffn + '.mid'
 
             shutil.copy2(ff, copy_path+'/'+fff)
           
+          shutil.copy2(f, copy_path+'/'+fn)
+
           #=======================================================
           
           print('Done!')
@@ -575,6 +574,9 @@ for f in filez:
 
           # Processed files counter
           files_count += 1
+
+          if files_count == 2:
+            break
                                         
     except KeyboardInterrupt:
         print('Quitting...')
