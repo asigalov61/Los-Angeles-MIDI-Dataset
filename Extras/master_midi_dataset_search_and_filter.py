@@ -130,7 +130,7 @@ print('Done!')
 
 """# (SEARCH AND FILTER)
 
-### DO NOT FORGET TO UPLOAD YOUR MASTER DATASET TO "Master-Dataset" FOLDER
+### DO NOT FORGET TO UPLOAD YOUR MASTER DATASET TO "Master-MIDI-Dataset" FOLDER
 """
 
 #@title Master MIDI Dataset Search and Filter
