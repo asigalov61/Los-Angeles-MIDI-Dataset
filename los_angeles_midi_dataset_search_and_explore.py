@@ -1100,7 +1100,7 @@ for d in tqdm(meta_data):
     print('WARNING !!!')
     print('=' * 70)
     print('Error detected:', e)
-    ratios.append(0)
+    final_ratios.append(0)
     print('=' * 70)
     break
 
