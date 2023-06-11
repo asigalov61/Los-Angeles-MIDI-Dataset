@@ -30,7 +30,7 @@ Powered by tegridy-tools: https://github.com/asigalov61/tegridy-tools
 
 #@title Import all needed modules
 
-print('Loading needed modules. Please wait...')
+print('Loading core modules... Please wait...')
 import os
 
 import math
@@ -38,15 +38,22 @@ import statistics
 import random
 from collections import Counter
 import shutil
-import difflib
 import hashlib
 from tqdm import tqdm
+
+print('Creating IO dirs...')
 
 if not os.path.exists('/content/Dataset'):
     os.makedirs('/content/Dataset')
 
 if not os.path.exists('/content/Output'):
     os.makedirs('/content/Output')
+
+output_dirs_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
+
+for o in output_dirs_list:
+  if not os.path.exists('/content/Output/'+str(o)+'/'):
+    os.makedirs('/content/Output/'+str(o)+'/')
 
 print('Loading TMIDIX module...')
 os.chdir('/content/tegridy-tools/tegridy-tools')
@@ -119,9 +126,10 @@ files_count = LAST_SAVED_BATCH_COUNT
 
 melody_chords_f = []
 
+all_md5_names = []
 all_pitches_sums = []
 all_pitches_counts = []
-all_md5_names = []
+all_pitches_and_counts = []
 
 print('Processing MIDI files. Please wait...')
 print('=' * 70)
@@ -149,8 +157,6 @@ for f in tqdm(filez[START_FILE_NUMBER:]):
             # Convering MIDI to ms score with MIDI.py module
             score = TMIDIX.midi2score(fdata)
 
-            # INSTRUMENTS CONVERSION CYCLE
-
             events_matrix = []
             itrack = 1
 
@@ -177,31 +183,31 @@ for f in tqdm(filez[START_FILE_NUMBER:]):
                             pitches_sum = sum(pitches)
 
                             if pitches_sum not in all_pitches_sums:
-                                pitches_counts = sorted([val for key,val in Counter(pitches).most_common()], reverse=True)
+                                pitches_and_counts = sorted([[key, val] for key,val in Counter(pitches).most_common()], reverse=True, key = lambda x: x[1])
+                                pitches_counts = [p[1] for p in pitches_and_counts]
+                                
                                 #=======================================================
 
                                 if pitches_counts not in all_pitches_counts:
 
-                                    # Saving every 5000 processed files
+                                    # Saving data every 50000 processed files
                                     if files_count % 50000 == 0:
-                                      dir_count = ((files_count // 50000)+1) * 50000
-                                      dir_count_str = str(dir_count).zfill(7)
-                                      copy_path = '/content/Output/'+dir_count_str
-                                      if not os.path.exists(copy_path):
-                                          os.mkdir(copy_path)
                                       print('SAVING !!!')
                                       print('=' * 70)
-                                      print('Saving processed files...')
+                                      print('Saving processed data...')
+                                      print('=' * 70)
+                                      TMIDIX.Tegridy_Any_Pickle_File_Writer([all_md5_names, all_pitches_sums, all_pitches_and_counts], '/content/Output/all_files_data')
                                       print('=' * 70)
                                       print('Processed so far:', files_count, 'out of', input_files_count, '===', files_count / input_files_count, 'good files ratio')
                                       print('=' * 70)
-                                      TMIDIX.Tegridy_Any_Pickle_File_Writer([all_md5_names, all_pitches_sums, all_pitches_counts], '/content/Output/all_files_data')
+                                      
 
-                                    shutil.copy2(f, copy_path+'/'+md5name)
+                                    shutil.copy2(f, '/content/Output/'+str(md5name[0])+'/'+md5name)
 
                                     all_md5_names.append(str(md5sum))
                                     all_pitches_sums.append(pitches_sum)
                                     all_pitches_counts.append(pitches_counts)
+                                    all_pitches_and_counts.append(pitches_and_counts)
                                     
                                     if files_count % 1000 == 0:
                                       print('=' * 70)
@@ -210,7 +216,9 @@ for f in tqdm(filez[START_FILE_NUMBER:]):
 
                                     # Processed files counter
                                     files_count += 1
-                                
+
+                                #=======================================================
+    
     except KeyboardInterrupt:
         print('Saving current progress and quitting...')
         break  
@@ -223,15 +231,13 @@ for f in tqdm(filez[START_FILE_NUMBER:]):
         print('=' * 70)
         continue
 
-# Saving last processed files...
+# Saving last processed data...
 print('=' * 70)
-print('Saving processed files...')
+print('Saving processed data...')
+print('=' * 70)
+TMIDIX.Tegridy_Any_Pickle_File_Writer([all_md5_names, all_pitches_sums, all_pitches_and_counts], '/content/Output/all_files_data')
 print('=' * 70)
 print('Processed so far:', files_count, 'out of', input_files_count, '===', files_count / input_files_count, 'good files ratio')
-print('=' * 70)
-TMIDIX.Tegridy_Any_Pickle_File_Writer([all_md5_names, all_pitches_sums, all_pitches_counts], '/content/Output/all_files_data')
-
-# Displaying resulting processing stats...
 print('=' * 70)
 print('Done!')   
 print('=' * 70)
