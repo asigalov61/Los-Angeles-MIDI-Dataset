@@ -474,10 +474,10 @@ for f in filez:
                 num_same_pitches = len(same_pitches)
                 
                 if num_same_pitches == len(trimmed_pitches_counts):
-                  same_pitches_ratio = (num_same_pitches / max(len(trimmed_p_counts), len(trimmed_pitches_counts)))
+                  same_pitches_ratio = (num_same_pitches / len(trimmed_p_counts))
                 else:
-                  same_pitches_ratio = (num_same_pitches / len(trimmed_pitches_counts))
-                
+                  same_pitches_ratio = (num_same_pitches / max(len(trimmed_p_counts), len(trimmed_pitches_counts)))
+               
                 if skip_exact_matches:
                   if same_pitches_ratio == 1:
                     same_pitches_ratio = 0
