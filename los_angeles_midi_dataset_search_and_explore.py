@@ -1024,7 +1024,11 @@ for d in tqdm(meta_data):
 
       same_pitches = set([T[0] for T in trimmed_p_counts]) & set([m[0] for m in trimmed_pitches_counts])
       num_same_pitches = len(same_pitches)
-      same_pitches_ratio = (num_same_pitches / max(len(trimmed_p_counts), len(trimmed_pitches_counts)))
+      
+      if num_same_pitches == len(trimmed_pitches_counts):
+        same_pitches_ratio = (num_same_pitches / max(len(trimmed_p_counts), len(trimmed_pitches_counts)))
+      else:
+        same_pitches_ratio = (num_same_pitches / len(trimmed_pitches_counts))
 
       if skip_exact_matches:
         if same_pitches_ratio == 1:
@@ -1207,8 +1211,11 @@ for d in tqdm(meta_data):
     trimmed_chords_counts = [y for y in ms_chords_counts if y[1] >= (max_chords_count * chords_counts_cutoff_threshold_ratio)] 
 
     num_same_chords = len(set([tuple(T[0]) for T in trimmed_c_counts]) & set([tuple(t[0]) for t in trimmed_chords_counts]))
-    same_chords_ratio = (num_same_chords / max(len(trimmed_c_counts), len(trimmed_chords_counts)))
-
+    
+    if num_same_chords == len(trimmed_chords_counts):
+      same_chords_ratio = (num_same_chords / max(len(trimmed_c_counts), len(trimmed_chords_counts)))
+    else:
+      same_chords_ratio = (num_same_chords / len(trimmed_chords_counts))
     if skip_exact_matches:
       if same_chords_ratio == 1:
         same_chords_ratio = 0
@@ -1323,7 +1330,12 @@ for d in tqdm(meta_data):
     num_same_patches = len(set(p_list) & set(patches_list))
     
     if len(set(p_list + patches_list)) > 0:
-      same_patches_ratio = num_same_patches / max(len(p_list), len(patches_list))
+      
+      if num_same_patches = len(patches_list):
+        same_patches_ratio = num_same_patches / max(len(p_list), len(patches_list))
+      else:
+        same_patches_ratio = num_same_patches / len(patches_list)
+    
     else:
       same_patches_ratio = 0
 
