@@ -147,7 +147,7 @@ maximum_match_ratio_to_search_for = 1 #@param {type:"slider", min:0, max:1, step
 
 pitches_counts_cutoff_threshold_ratio = 0 #@param {type:"slider", min:0, max:1, step:0.05}
 search_transposed_pitches = False #@param {type:"boolean"}
-skip_exact_matches = True #@param {type:"boolean"}
+skip_exact_matches = False #@param {type:"boolean"}
 
 #@markdown Additional search options
 
@@ -472,8 +472,12 @@ for f in filez:
 
                 same_pitches = set([T[0] for T in trimmed_p_counts]) & set([m[0] for m in trimmed_pitches_counts])
                 num_same_pitches = len(same_pitches)
-                same_pitches_ratio = (num_same_pitches / len(set([m[0] for m in trimmed_p_counts]+[T[0] for T in trimmed_pitches_counts])))
-
+                
+                if num_same_pitches == len(trimmed_pitches_counts):
+                  same_pitches_ratio = (num_same_pitches / max(len(trimmed_p_counts), len(trimmed_pitches_counts)))
+                else:
+                  same_pitches_ratio = (num_same_pitches / len(trimmed_pitches_counts))
+                
                 if skip_exact_matches:
                   if same_pitches_ratio == 1:
                     same_pitches_ratio = 0
@@ -543,7 +547,7 @@ for f in filez:
 
           print('-' * 70)
 
-          max_ratios = sorted(final_ratios, reverse=True)[:number_of_top_ratios_MIDIs_to_collect]
+          max_ratios = sorted(set(final_ratios), reverse=True)[:number_of_top_ratios_MIDIs_to_collect]
 
           print('Max match ratio', max_ratios[0])
           print('-' * 70)
