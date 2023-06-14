@@ -48,20 +48,18 @@
 ***
 ## Main Features:
 
-### 1) ~240000 100% unique MIDIs to explore :)
+### 1) ~232000 100% unique MIDIs to explore :)
 ### 2) Each MIDI file was read-checked and 100% de-duped
 ### 3) Extensive meta-data for each MIDI file
-### 4) Detailed features matrix for each MIDI file
-### 5) Helper Python code
+### 4) Helper Python code
 
 ***
 
-## NEW in version 2.0
+## NEW in version 3.0
 
-### 1) Quality over quantity: the dataset was reduced in half by triple-deduping (first by md5 hash, then by pitches sum, and then by pitches counts)
-### 2) The dataset meta-data was extended to provide additional important info and to show more MIDI data
-### 3) The dataset code/colab is now featuring super-fast MIDI searches (by pitches and by patches)
-### 4) The dataset code/colab can now display and play each MIDI from the dataset
+### 1) Quality over quantity: the dataset was further reduced by even more aggressive de-duping
+### 2) The dataset meta-data was optimized, streamlied and compressed
+### 3) MIDI Matrixes search and data was depreciated and removed to reduce the size of the dataset data
 
 ***
 
