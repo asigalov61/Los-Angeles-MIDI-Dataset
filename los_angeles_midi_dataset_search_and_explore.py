@@ -269,8 +269,8 @@ plt.figure(figsize=(8, 8))
 plt.plot(y, pitches_counts_totals)
 
 plt.title('MIDI Instruments Pitches')
-plt.xlabel("Ratio")
-plt.ylabel("Pitch")
+plt.xlabel("Pitch")
+plt.ylabel("Count")
 plt.tight_layout()
 plt.plot()
 
@@ -293,9 +293,9 @@ plt.figure(figsize=(8, 8))
 plt.imshow(sim_mat, cmap="inferno", interpolation="none")
 im_ratio = 1
 plt.colorbar(fraction=0.046 * im_ratio, pad=0.04)
-plt.title('MIDI Instruments Pitches')
-plt.xlabel("Ratio")
-plt.ylabel("Pitch")
+plt.title('MIDI Drums Pitches')
+plt.xlabel("Pitch")
+plt.ylabel("Count")
 plt.tight_layout()
 plt.plot()
 
@@ -314,8 +314,8 @@ plt.figure(figsize=(8, 8))
 plt.plot(y, pitches_counts_totals)
 
 plt.title('MIDI Drums Pitches')
-plt.xlabel("Ratio")
-plt.ylabel("Pitch")
+plt.xlabel("Pitch")
+plt.ylabel("Count")
 plt.tight_layout()
 plt.plot()
 
@@ -339,8 +339,8 @@ plt.imshow(sim_mat, cmap="inferno", interpolation="none")
 im_ratio = 1
 plt.colorbar(fraction=0.046 * im_ratio, pad=0.04)
 plt.title('MIDI Drums Pitches')
-plt.xlabel("Ratio")
-plt.ylabel("Pitch")
+plt.xlabel("Pitch")
+plt.ylabel("Count")
 plt.tight_layout()
 plt.plot()
 
@@ -350,8 +350,8 @@ patches_counts_totals = [0] * 256
 
 
 for m in tqdm(meta_data):
-  for mm in m[1][11][1]:
-    patches_counts_totals[mm] += 1
+  for mm in m[1][12][1]:
+    patches_counts_totals[mm[0]] += mm[1]
 
 
 y = range(128)
@@ -359,8 +359,8 @@ plt.figure(figsize=(8, 8))
 plt.plot(y, patches_counts_totals[:128])
 
 plt.title('MIDI Patches')
-plt.xlabel("Ratio")
-plt.ylabel('Patch')
+plt.xlabel("Patch")
+plt.ylabel('Count')
 plt.tight_layout()
 plt.plot()
 
@@ -377,82 +377,6 @@ f = full_path_to_source_MIDI
 
 print('=' * 70)
 print('Loading MIDI file...')
-
-score = MIDI.midi2ms_score(open(f, 'rb').read())
-
-events_matrix = []
-
-itrack = 1
-
-while itrack < len(score):
-    for event in score[itrack]:
-      events_matrix.append(event)
-    itrack += 1
-
-# Sorting...
-events_matrix.sort(key=lambda x: x[1])
-
-# recalculating timings
-for e in events_matrix:
-    e[1] = int(e[1] / 10)
-    if e[0] == 'note':
-      e[2] = int(e[2] / 20)
-
-# final processing...
-
-melody_chords = []
-
-patches = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-pe = events_matrix[0]
-for e in events_matrix:
-
-  if e[0] == 'note':
-    # ['note', start_time, duration, channel, note, velocity]
-    time = max(0, min(255, e[1]-pe[1]))
-    duration = max(1, min(255, e[2]))
-    channel = max(0, min(15, e[3]))
-
-    if e[3] != 9:
-      instrument = max(0, min(127, patches[e[3]]))
-    else:
-      instrument = max(128, min(255, patches[e[3]]+128))
-
-    if e[3] != 9:
-
-      pitch = max(1, min(127, e[4]))
-    else:
-      pitch = max(129, min(255, e[4]+128))
-
-    if e[3] != 9:
-      velocity = max(1, min(127, e[5]))
-    else:
-      velocity = max(129, min(255, e[5]+128))
-
-    melody_chords.append([time, duration, channel, instrument, pitch, velocity])
-
-  if e[0] == 'patch_change':
-    # ['patch_change', dtime, channel, patch]
-    time = max(0, min(127, e[1]-pe[1]))
-    channel = max(0, min(15, e[2]))
-    patch = max(0, min(127, e[3]))
-
-    patches[channel] = patch
-
-  pe = e # Previous event
-
-MATRIX = [[0]*256 for i in range(38)]
-
-for m in melody_chords:
-
-  MATRIX[0][m[0]] += 1
-  MATRIX[1][m[1]] += 1
-  MATRIX[2][m[2]] += 1
-  MATRIX[3][m[3]] += 1
-  MATRIX[4][m[4]] += 1
-  MATRIX[5][m[5]] += 1
-  MATRIX[m[2]+6][m[3]] += 1
-  MATRIX[m[2]+22][m[4]] += 1
 
 #==================================================
 
@@ -616,7 +540,7 @@ plt.show()
 
 """# (SEARCH AND EXPLORE)"""
 
-#@title MIDI Pitches Search (Fast)
+#@title MIDI Pitches Search
 
 #@markdown NOTE: You can stop the search at any time to render partial results
 
@@ -878,7 +802,7 @@ if download_MIDI:
   files.download(f)
   print('=' * 70)
 
-#@title MIDI Chords Search (Fast)
+#@title MIDI Chords Search
 
 #@markdown NOTE: You can stop the search at any time to render partial results
 
@@ -1007,7 +931,7 @@ if download_MIDI:
   files.download(f)
   print('=' * 70)
 
-#@title MIDI Patches Search (Fast)
+#@title MIDI Patches Search
 
 #@markdown NOTE: You can stop the search at any time to render partial results
 
