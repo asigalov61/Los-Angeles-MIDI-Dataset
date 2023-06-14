@@ -58,7 +58,7 @@
 ## NEW in version 3.0
 
 ### 1) Quality over quantity: the dataset was further reduced by even more aggressive de-duping
-### 2) The dataset meta-data was optimized, streamlied and compressed
+### 2) The dataset meta-data was optimized, streamlined and compressed
 ### 3) MIDI Matrixes search and data was depreciated and removed to reduce the size of the dataset data
 
 ***
