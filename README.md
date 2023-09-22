@@ -55,6 +55,12 @@
 
 ***
 
+## NEW in version 3.1
+
+### 1) Added 12280 new unique MIDIs
+
+***
+
 ## NEW in version 3.0
 
 ### 1) Quality over quantity: the dataset was further reduced by even more aggressive de-duping
