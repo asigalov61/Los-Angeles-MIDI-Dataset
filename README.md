@@ -48,7 +48,7 @@
 ***
 ## Main Features:
 
-### 1) ~232000 100% unique MIDIs to explore :)
+### 1) ~245000 100% unique MIDIs to explore :)
 ### 2) Each MIDI file was read-checked and 100% de-duped
 ### 3) Extensive meta-data for each MIDI file
 ### 4) Helper Python code
