@@ -1,6 +1,6 @@
 # Los Angeles MIDI Dataset Concept Artwork
 
-## Made with deep-daze and OpenAI's DALL-E 2
+## Made with Stable Diffusion XL (SDXL)
 
 ***
 
