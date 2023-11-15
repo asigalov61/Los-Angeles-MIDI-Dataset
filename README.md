@@ -48,24 +48,24 @@
 ***
 ## Main Features:
 
-### 1) ~245000 100% unique MIDIs to explore :)
+### 1) ~405000 100% unique MIDIs to explore :)
 ### 2) Each MIDI file was read-checked and 100% de-duped
 ### 3) Extensive meta-data for each MIDI file
-### 4) Helper Python code
+### 4) Full chords data for each MIDI file
+### 5) Helper Python code
 
 ***
 
-## NEW in version 3.1
+## NEW in version 4.0
 
-### 1) Added 12280 new unique MIDIs
+### 1) Added 160519 new unique MIDIs
+### 2) Dataset now contains 404714 MIDIs
+### 3) Removed all malformed MIDIs
+### 4) Expanded dataset MIDIs metadata
+### 5) Added MIDIs chords database
+### 6) Updated dataset concept artwork
 
-***
-
-## NEW in version 3.0
-
-### 1) Quality over quantity: the dataset was further reduced by even more aggressive de-duping
-### 2) The dataset meta-data was optimized, streamlined and compressed
-### 3) MIDI Matrixes search and data was depreciated and removed to reduce the size of the dataset data
+### Enjoy! :)
 
 ***
 
