@@ -15,5 +15,9 @@
 
 ***
 
+## Please note that the metadata in the GitHub repo is a reduced version of the full metadata. Full metadata files are a part of Los Angeles MIDI Dataset file which you can download from Hugging Face at the link provided at the main page of this repo.
+
+***
+
 ### Project Los Angeles
 ### Tegridy Code 2023
