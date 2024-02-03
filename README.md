@@ -74,11 +74,11 @@
     title       = {Los Angeles MIDI Dataset: SOTA kilo-scale MIDI dataset for MIR and Music AI purposes},
     author      = {Aleksandr Lev},
     booktitle   = {GitHub},
-    year        = {2023},
+    year        = {2024},
 }
 ```
 
 ***
 
 ### Project Los Angeles
-### Tegridy Code 2023
+### Tegridy Code 2024
