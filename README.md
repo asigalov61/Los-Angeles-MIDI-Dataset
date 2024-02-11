@@ -16,6 +16,15 @@
 
 ***
 
+## [NEW] Master MIDI Dataset GPU Search and Filter
+
+[![Open In Colab][colab-badge]][colab-notebook5]
+
+[colab-notebook5]: <https://colab.research.google.com/github/asigalov61/Los-Angeles-MIDI-Dataset/blob/main/Extras/Master_MIDI_Dataset_GPU_Search_and_Filter.ipynb>
+[colab-badge]: <https://colab.research.google.com/assets/colab-badge.svg>
+
+***
+
 ## Master MIDI Dataset Search and Filter
 
 [![Open In Colab][colab-badge]][colab-notebook4]
@@ -70,7 +79,7 @@
 ***
 
 ```bibtex
-@inproceedings{lev2022losangelesmididataset,
+@inproceedings{lev2024losangelesmididataset,
     title       = {Los Angeles MIDI Dataset: SOTA kilo-scale MIDI dataset for MIR and Music AI purposes},
     author      = {Aleksandr Lev},
     booktitle   = {GitHub},
