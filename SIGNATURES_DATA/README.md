@@ -10,9 +10,9 @@
 
 ```[[note_or_chord (0-449), count], [note_or_chord (0-449), count], [note_or_chord (0-449), count], ...]```
 
-### note_or_chord value represent either standard MIDI pitch (0-127) or a tonal_chord (128-449)
+### note_or_chord value represent either standard MIDI pitch (0-127) or a tonal chord (128-449)
 
-### You can decode the tonal_chord values by using TMIDIX module like so:
+### You can decode the tonal chord values by using TMIDIX module like so:
 
 ```TMIDIX.ALL_CHORDS.index(note_or_chord-128)```
 
