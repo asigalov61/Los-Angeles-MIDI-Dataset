@@ -2,7 +2,7 @@
 
 ***
 
-### Los Angeles MIDI Dataset CHORDS DATA can be found in the Los Angeles MIDI dataset archive which you can download from HUgging Face
+### Los Angeles MIDI Dataset CHORDS DATA can be found in the Los Angeles MIDI dataset archive which you can download from [Hugging Face](https://huggingface.co/datasets/projectlosangeles/Los-Angeles-MIDI-Dataset/blob/main/Los-Angeles-MIDI-Dataset-Ver-4-0-CC-BY-NC-SA.zip)
 
 ***
 
