@@ -8,7 +8,7 @@
 
 ### Each signature entry is a list of lists and has the following format:
 
-```[ [note_or_chord (0-449), count], [note_or_chord (0-449), count], [note_or_chord (0-449), count]...]```
+```[ [note_or_chord (0-449), count], [note_or_chord (0-449), count], [note_or_chord (0-449), count]... ]```
 
 ### note_or_chord value represent either standard MIDI pitch (0-127) or a tonal_chord (128-449)
 
