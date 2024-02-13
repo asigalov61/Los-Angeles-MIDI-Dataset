@@ -18,8 +18,8 @@
 [delta start time, (duration, patch, pitch, velocity), (duration, patch, pitch, velocity), ...]
 ```
 
-#### 1) delta start time (0-255) (1000/16 ms)
-#### 2) duration (0-255) (1000/16 ms)
+#### 1) delta start time (0-255) (1000/64 ms)
+#### 2) duration (0-255) (1000/64 ms)
 #### 3) MIDI patch (0-128) (128 == drums)
 #### 4) MIDI pitch (0-127)
 #### 5) MIDI velocity (0-127)
