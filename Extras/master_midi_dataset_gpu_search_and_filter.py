@@ -48,10 +48,13 @@ from tqdm import tqdm
 import pprint
 import statistics
 import shutil
+import locale
 
 import cupy as cp
 
 from huggingface_hub import hf_hub_download
+
+from google.colab import files
 
 print('Loading TMIDIX module...')
 os.chdir('/content/Los-Angeles-MIDI-Dataset')
@@ -432,5 +435,50 @@ if filez:
 else:
   print('Could not find any MIDI files. Please check Dataset dir...')
   print('=' * 70)
+
+"""# (DOWNLOAD RESULTS)"""
+
+# Commented out IPython magic to ensure Python compatibility.
+#@title Zip and download all search results
+
+print('=' * 70)
+
+locale.getpreferredencoding = lambda: "UTF-8"
+
+try:
+    os.remove('Master_MIDI_Dataset_Search_Results_Output.zip')
+except OSError:
+    pass
+
+print('Zipping... Please wait...')
+print('=' * 70)
+
+# %cd /content/Output-MIDI-Dataset/
+!zip -r Master_MIDI_Dataset_Search_Results_Output.zip *
+# %cd /content/
+
+print('=' * 70)
+print('Done!')
+print('=' * 70)
+
+print('Downloading final zip file...')
+print('=' * 70)
+
+files.download('/content/Output-MIDI-Dataset/Master_MIDI_Dataset_Search_Results_Output.zip')
+
+print('Done!')
+print('=' * 70)
+
+# @title Delete search results directory and files
+
+#@markdown WARNING: This can't be undone so make sure you downloaded the search results first
+
+print('=' * 70)
+print('Deleting... Please wait...')
+print('=' * 70)
+
+!rm -rf /content/Output-MIDI-Dataset
+print('Done!')
+print('=' * 70)
 
 """# Congrats! You did it! :)"""
