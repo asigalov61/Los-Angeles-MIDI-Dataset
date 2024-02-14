@@ -172,10 +172,10 @@ print('=' * 70)
 
 #@markdown NOTE: You can stop the search at any time to render partial results
 
-number_of_top_matches_MIDIs_to_collect = 20 #@param {type:"slider", min:5, max:50, step:1}
-search_matching_type = "ratios" # @param ["ratios", "distances", "cross-correlations"]
-distances_norm_order = 3 # @param {type:"slider", min:1, max:10, step:1}
+number_of_top_matches_MIDIs_to_collect = 30 #@param {type:"slider", min:5, max:50, step:1}
+search_matching_type = "Ratios" # @param ["Ratios", "Distances", "Correlations"]
 maximum_match_ratio_to_search_for = 1 #@param {type:"slider", min:0, max:1, step:0.001}
+distances_norm_order = 3 # @param {type:"slider", min:1, max:10, step:1}
 match_drums = False # @param {type:"boolean"}
 
 print('=' * 70)
@@ -206,8 +206,8 @@ if filez:
 
   ###################
 
-  if not os.path.exists('/content/Output-MIDI-Dataset'):
-      os.makedirs('/content/Output-MIDI-Dataset')
+  if not os.path.exists('/content/Output-MIDI-Dataset/'+search_matching_type):
+      os.makedirs('/content/Output-MIDI-Dataset/'+search_matching_type)
 
   ###################
 
@@ -310,17 +310,17 @@ if filez:
             comps_counts_sums = cp.vstack((cp.repeat(cp.sum(target_sig), signatures_data.shape[0]), cp.sum(signatures_data, axis=1)))
             comps_counts_sums_ratios = cp.min(comps_lengths_ratios, axis=0) / cp.max(comps_lengths_ratios, axis=0)
 
-            if search_matching_type == 'ratios':
+            if search_matching_type == 'Ratios':
 
               ratios = cp.where(target_sig != 0, cp.divide(cp.minimum(signatures_data, target_sig), cp.maximum(signatures_data, target_sig)), 0)
               results = cp.mean(ratios, axis=1)
 
-            elif search_matching_type == 'distances':
+            elif search_matching_type == 'Distances':
 
               distances = cp.power(cp.sum(cp.power(cp.abs(signatures_data - target_sig), distances_norm_order), axis=1), 1 / distances_norm_order)
               results = 1 - cp.divide((distances - cp.min(distances)), (cp.max(distances) - cp.min(distances)))
 
-            elif search_matching_type == 'cross-correlations':
+            elif search_matching_type == 'Correlations':
 
               main_array_min = cp.min(signatures_data, axis=1, keepdims=True)
               main_array_max = cp.max(signatures_data, axis=1, keepdims=True)
@@ -393,7 +393,7 @@ if filez:
             #=======================================================
 
             dir_str = str(fn1)
-            copy_path = '/content/Output-MIDI-Dataset/'+dir_str
+            copy_path = '/content/Output-MIDI-Dataset/'+search_matching_type+'/'+dir_str
             if not os.path.exists(copy_path):
                 os.mkdir(copy_path)
 
