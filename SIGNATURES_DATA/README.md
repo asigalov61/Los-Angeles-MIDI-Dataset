@@ -20,6 +20,8 @@ if 127 < note_or_chord < 449:
   TMIDIX.ALL_CHORDS.index(tonal_chord)
 ```
 
+### Each signature pitch/chord/drum value appears in order of the composition
+
 ***
 
 ### Los Angeles MIDI Dataset SIGNATURES DATA application example can be found here:
